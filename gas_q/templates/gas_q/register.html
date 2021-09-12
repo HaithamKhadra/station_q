@@ -1,0 +1,41 @@
+{% extends "gas_q/layout.html" %}
+
+{% block title %}register{% endblock %}
+
+{% block body %}
+<div id="login-register">
+    <div id="boxx">
+        <div class="login-container">
+            <div class="title">
+                <h2>Register</h2>
+            </div>
+
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+
+            <form class="login-form" action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+                </div>
+                <input class="btn btn-primary" type="submit" value="REGISTER">
+            </form>
+        </div>
+
+        <div class="reg-sec">
+            <p style="font-size: 20px;">Already have an account?</p>
+            <a href="{% url 'login' %}"><button class="btn btn-primary">Log In</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

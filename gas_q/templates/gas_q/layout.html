@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'gas_q/style.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+    
+</head>
+
+<body>
+    <div class="log-register">
+        {% if user.is_authenticated %}
+        <a class="nav-link" href="{% url 'logout' %}">
+            <button type="button" class="btn">Log Out</button>
+        </a>
+        {% else %}
+        <a class="nav-link" href="{% url 'login' %}">
+            <button type="button" class="btn">Log In</button>
+        </a>
+        <a class="nav-link" href="{% url 'register' %}">
+            <button type="button" class="btn">Register</button>
+        </a>
+        {% endif %}
+    </div>
+
+    </header>
+    {% if user.is_authenticated %}
+    <div class="alert alert-success" role="alert">
+        <small>Logged in as </small><strong> {{ user.username }}</strong>.
+    </div>
+    {% endif %}
+
+
+    {% block body %}
+    
+    {% endblock %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer>
+        <small>&#169; 2021 Haitham Khadra</small>
+    </footer>
+    {% block script %}
+    {% endblock %}
+    
+</body>
+
+</html>

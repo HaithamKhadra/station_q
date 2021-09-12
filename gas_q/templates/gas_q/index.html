@@ -1,0 +1,35 @@
+{% extends "gas_q/layout.html" %}
+{% load static %}
+
+{% block title %}Gas Queue{% endblock %}
+
+{% block body %}
+
+<h2>Gas Queue - index</h2>
+
+
+
+<form action="{% url 'index' %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <!-- <div>
+      <input autofocus type="text" name="carmaker" placeholder="car maker">
+  </div>
+  <div>
+      <input type="text" name="carnum" placeholder="car number">
+  </div> -->
+
+  <input type="submit" value="submit"> 
+</form>
+   
+<h2>
+  {% if msg %}
+    {{ msg }}
+  {% endif %}
+</h2>
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'gas_q/index.js' %}"></script>
+{% endblock %}
