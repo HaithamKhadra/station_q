@@ -35,8 +35,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
-
+    return HttpResponseRedirect(reverse("login"))
 
 def register(request):
     if request.method == "POST":
@@ -65,7 +64,7 @@ def register(request):
         return render(request, "gas_q/register.html")
 
 
-
+@login_required(login_url='/login')
 def index(request):
 
     form = CreateForm()
@@ -77,7 +76,9 @@ def index(request):
         if form.is_valid():
             new_appointment = form.save(commit=False)
             car_num = request.POST['car_num']
-            if Appointment.objects.filter(car_num=car_num).exists():
+            car_num_exists = Appointment.objects.filter(car_num=car_num).exists()
+            user_has_app = Appointment.objects.filter(user=request.user).exists()
+            if car_num_exists or user_has_app:
                 return render(request, 'gas_q/index.html', {
                     'form': form,
                     'msg': 'failed'
@@ -95,7 +96,7 @@ def index(request):
     #     'test': 'hello, world!'
     # })
 
-
+@login_required(login_url='/login')
 def json(request):
     if request.method == 'GET':
         try:

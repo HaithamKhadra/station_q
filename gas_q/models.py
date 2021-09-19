@@ -23,7 +23,7 @@ class Appointment(models.Model):
         unique_together = ('user', 'timeslot')
 
     TIMESLOT_LIST = (
-        (None, 'Your String For Display'),
+        (None, 'اخشسبيشسبشيبش'),
         (0, '09:00 – 09:30'),
         (1, '10:00 – 10:30'),
         (2, '11:00 – 11:30'),
