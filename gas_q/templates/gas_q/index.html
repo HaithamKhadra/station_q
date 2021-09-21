@@ -10,6 +10,15 @@
   <form class="d-flex flex-column justify-content-center w-75 py-3" action="{% url 'index' %}" method="post">
     {% csrf_token %}
     {{ form }}
+    <!-- {{ form.user }}
+    <label for="id_phone_number">Origin</label>
+    {{ form.phone_number }}
+    {{ form.place }}
+    {{ form.car_make }}
+    {{ form.car_num }}
+    {{ form.day }}
+    {{ form.timeslot }} -->
+
     <!-- <div>
         <input autofocus type="text" name="carmaker" placeholder="car maker">
     </div>
@@ -17,7 +26,7 @@
         <input type="text" name="carnum" placeholder="car number">
     </div> -->
   
-    <input type="submit" class="btn btn-primary my-3" value="اطلب وصل">
+    <input type="submit" class="btn btn-primary my-3 py-1" value="اطلب وصل">
   </form>
   
 </section>

@@ -24,15 +24,20 @@ class Appointment(models.Model):
 
     TIMESLOT_LIST = (
         (None, 'الأوقات'),
-        (0, '08:30 – 09:00'),
-        (1, '09:00 – 09:30'),
-        (2, '09:30 – 10:00'),
-        (3, '10:00 – 10:30'),
-        (4, '10:30 – 11:00'),
-        (5, '11:00 – 11:30'),
-        (6, '11:30 – 12:00'),
-        (7, '12:00 – 12:30'),
-        (8, '12:30 – 01:00'),
+        (00, '08:30 – 09:00'),
+        (10, '09:00 – 09:30'),
+        (11, '09:30 – 10:00'),
+        (12, '10:00 – 10:30'),
+        (13, '10:30 – 11:00'),
+        (14, '11:00 – 11:30'),
+        (15, '11:30 – 12:00'),
+        (16, '12:00 – 12:30'),
+        (17, '12:30 – 01:00'),
+        (18, '01:00 – 01:30'),
+        (19, '01:30 – 02:00'),
+        (20, '02:00 – 02:30'),
+        (21, '02:30 – 03:00'),
+        (22, '03:00 – 03:30'),
     )
 
     DAYS = (
@@ -60,6 +65,7 @@ class Appointment(models.Model):
                     message='8 nums', 
                     code='nomatch')]
     )
+    place = models.CharField(max_length=24, blank=False, null=True)
     car_num = models.CharField(
                 max_length=7,
                 validators=[RegexValidator(
@@ -81,6 +87,7 @@ class Appointment(models.Model):
             "car_make": self.car_make,
             "car_num": self.car_num,
             "phone_number": self.phone_number,
+            'place': self.place,
             "day": self.day,
             "timeslot": self.timeslot, 
         }

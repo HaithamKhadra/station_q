@@ -8,18 +8,11 @@ const removeTimeSlot = () => {
   const hours = document.getElementById('id_timeslot');
   const days = document.getElementById('id_day');
   const labels = document.getElementsByTagName('label');
-  // console.log(days.selectedOptions.value)
-  // let label;
+
   for(var i = 0; i < labels.length; i++ ) {
     if (labels[i].htmlFor === 'id_timeslot')
       var label = labels[i]
   }
-  // labels.forEach(la => {
-  //   if (la.htmlFor === 'id_timeslot') {
-  //     label = la
-  //     console.log(label)
-  //   }
-  // })
   
   hours.style.display = 'none';
   label.style.display = 'none';
@@ -69,7 +62,7 @@ const removeTimeSlot = () => {
 
     // console.log(map);
     // let hide = map[0]
-    let hide = Object.keys(counts).filter(key => counts[key] >= 2) 
+    let hide = Object.keys(counts).filter(key => counts[key] >= 2) // CHANGE TO 6
     console.log(hide);
     
     day_options[0].addEventListener('change', () => {
@@ -86,7 +79,7 @@ const removeTimeSlot = () => {
               opt.hidden = false;
               // opt.selected = false;
               hide.forEach(i => {
-                if (opt.value === i.charAt(0) && daySelected === i.charAt(1) ) {
+                if (opt.value === (i.charAt(0)+i.charAt(1)) && daySelected === i.charAt(2) ) {
                   opt.hidden = true;
                   opt.selected = false;
                 }

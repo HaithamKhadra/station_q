@@ -7,7 +7,7 @@ class UserAdmin(admin.ModelAdmin):
   list_display = ('username', 'first_name', 'last_name', 'email')
 
 class AppointmentAdmin(admin.ModelAdmin):
-  list_display = ('user', 'car_make', 'car_num', 'day', 'timeslot')
+  list_display = ('user', 'car_make', 'car_num', 'day', 'timeslot', 'place', 'phone_number')
 
 
 admin.site.register(User, UserAdmin)

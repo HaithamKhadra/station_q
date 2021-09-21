@@ -75,7 +75,7 @@ def index(request):
             user = request.POST['user']
             car_num_exists = Appointment.objects.filter(car_num=car_num).exists()
             user_has_app = Appointment.objects.filter(user=user).exists()
-            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 2
+            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 2 # CHANGE TO 6
             # timeslot_taken = Appointment.objects.filter(timeslot=timeslot).count() > 2
 
             # print(time_taken)
@@ -142,7 +142,7 @@ def export_data(request):
     font_style = xlwt.XFStyle() 
     font_style.font.bold = True
 
-    columns = ['user', 'car_make', 'car_num', 'day', 'timeslot']
+    columns = ['user', 'car_make', 'car_num', 'day', 'timeslot', 'place']
 
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
@@ -163,7 +163,7 @@ def export_data(request):
             #             writer.writerow([appointment.user.username, appointment.car_make, 
             #                 appointment.car_num, appointment.DAYS[day][1], appointment.TIMESLOT_LIST[slot][1]])
 
-        for col_num in range(5):
+        for col_num in range(6):
             if col_num == 0:
                 ws.write(row_num, col_num, str(appointment.user), font_style)
             elif col_num == 1:
@@ -180,6 +180,8 @@ def export_data(request):
                     if appointment.TIMESLOT_LIST[slot][0] == appointment.timeslot:
                     # print(str(appointment.TIMESLOT_LIST[slot][1]))
                         ws.write(row_num, col_num, str(appointment.TIMESLOT_LIST[slot][1]), font_style)
+            elif col_num == 5:
+                ws.write(row_num, col_num, str(appointment.place), font_style)
         # for col_num in range(len(appointment)):
         #     ws.write(row_num, col_num, str(appointment[col_num]), font_style)
             # ws.write(row_num, col_num, str(appointment), font_style)
