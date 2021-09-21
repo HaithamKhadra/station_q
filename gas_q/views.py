@@ -1,14 +1,13 @@
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse , HttpResponse, response
 # from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
 from .models import Appointment, User
 from .forms import CreateForm
-from django.contrib import messages
 import json
 import csv
 import xlwt
@@ -58,7 +57,6 @@ def register(request):
         return render(request, "gas_q/register.html")
 
 
-# @login_required(login_url='/login')
 def index(request):
 
     form = CreateForm()
@@ -73,29 +71,24 @@ def index(request):
             day = request.POST['day']
             timeslot = request.POST['timeslot']
             user = request.POST['user']
+            place = request.POST['place']
             car_num_exists = Appointment.objects.filter(car_num=car_num).exists()
             user_has_app = Appointment.objects.filter(user=user).exists()
             time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 2 # CHANGE TO 6
-            # timeslot_taken = Appointment.objects.filter(timeslot=timeslot).count() > 2
 
-            # print(time_taken)
             if car_num_exists or user_has_app or time_taken:
                 return render(request, 'gas_q/error.html')
             else:
                 new_appointment.user = user
+                new_appointment.place = place
                 new_appointment.save()
-                # return redirect('index')
                 return render(request, 'gas_q/done.html')
 
     return render(request, 'gas_q/index.html', {
         'form': form
     })
 
-    # return render(request, "gas_q/index.html", {
-    #     'test': 'hello, world!'
-    # })
 
-# @login_required(login_url='/login')
 def json(request):
     if request.method == 'GET':
         try:
@@ -107,30 +100,7 @@ def json(request):
         all_apps = all_apps
         return JsonResponse([post.serialize() for post in all_apps], safe=False)
 
-# @login_required(login_url='/login')
-# def export_data(request):
-    
-#     response = HttpResponse(content_type='text/csv')
-#     response['Content_Desposition']='attachment; filename=Appointment'+str(datetime.datetime.now())+'.csv'
-    
-#     writer = csv.writer(response, dialect='excel-tab')
-#     writer.writerow(['user', 'car_make', 'car_num', 'day', 'timeslot'])
 
-#     appointments = Appointment.objects.all()
-
-#     for appointment in appointments:
-#         for slot in range(len(appointment.TIMESLOT_LIST)):
-#             if appointment.TIMESLOT_LIST[slot][0] == appointment.timeslot:
-#                 for day in range(len(appointment.DAYS)):
-#                     if appointment.DAYS[day][0] == appointment.day:
-#                         writer.writerow([appointment.user.username, appointment.car_make, 
-#                             appointment.car_num, appointment.DAYS[day][1], appointment.TIMESLOT_LIST[slot][1]]) 
-    
-    
-#     return response
-
-
-# @login_required(login_url='/login')
 def export_data(request):
     
     response = HttpResponse(content_type='application/ms-excel')
@@ -148,20 +118,10 @@ def export_data(request):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle() 
-    # appointments = Appointment.objects.all().values_list('user', 'car_make', 'car_num', 'day', 'timeslot')
     appointments = Appointment.objects.all()
-    # print(appointments)
 
     for appointment in appointments:
         row_num += 1
-
-        # for slot in range(len(appointment.TIMESLOT_LIST)):
-        #     print(str(appointment.TIMESLOT_LIST[slot][1]))
-            # if appointment.TIMESLOT_LIST[slot][0] == appointment.timeslot:
-            #     for day in range(len(appointment.DAYS)):
-            #         if appointment.DAYS[day][0] == appointment.day:
-            #             writer.writerow([appointment.user.username, appointment.car_make, 
-            #                 appointment.car_num, appointment.DAYS[day][1], appointment.TIMESLOT_LIST[slot][1]])
 
         for col_num in range(6):
             if col_num == 0:
@@ -173,18 +133,13 @@ def export_data(request):
             elif col_num == 3:
                 for slot in range(len(appointment.DAYS)):
                     if appointment.DAYS[slot][0] == appointment.day:
-                    # print(str(appointment.TIMESLOT_LIST[slot][1]))
                         ws.write(row_num, col_num, str(appointment.DAYS[slot][1]), font_style)
             elif col_num == 4:
                 for slot in range(len(appointment.TIMESLOT_LIST)):
                     if appointment.TIMESLOT_LIST[slot][0] == appointment.timeslot:
-                    # print(str(appointment.TIMESLOT_LIST[slot][1]))
                         ws.write(row_num, col_num, str(appointment.TIMESLOT_LIST[slot][1]), font_style)
             elif col_num == 5:
                 ws.write(row_num, col_num, str(appointment.place), font_style)
-        # for col_num in range(len(appointment)):
-        #     ws.write(row_num, col_num, str(appointment[col_num]), font_style)
-            # ws.write(row_num, col_num, str(appointment), font_style)
 
     wb.save(response)
 

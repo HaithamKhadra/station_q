@@ -6,18 +6,26 @@
 {% block body %}
 
 <section class="container d-flex flex-column justify-items-center align-items-center w-75 mt-1">
-  <h2 class="d-flex justify-content-center py-1">fill this form</h2>
-  <form class="d-flex flex-column justify-content-center w-75 py-3" action="{% url 'index' %}" method="post">
+  <h2 class="d-flex justify-content-center py-1">JaffalGroup</h2>
+  <form class="d-flex flex-column justify-content-center w-100 py-2 px-2" action="{% url 'index' %}" method="post">
     {% csrf_token %}
-    {{ form }}
-    <!-- {{ form.user }}
-    <label for="id_phone_number">Origin</label>
-    {{ form.phone_number }}
-    {{ form.place }}
-    {{ form.car_make }}
-    {{ form.car_num }}
-    {{ form.day }}
-    {{ form.timeslot }} -->
+    <!-- {{ form }} -->
+    <div>
+      <label for="id_user">الأسم</label>
+      {{ form.user }}
+      <label for="id_phone_number">رقم الهاتف</label>
+      {{ form.phone_number }}
+      <label for="id_place">مكان السكن</label>
+      {{ form.place }}
+      <label for="id_car_make">الشركة المصنعة للسيارة</label>
+      {{ form.car_make }}
+      <label for="id_car_num">رقم السيارة</label>
+      {{ form.car_num }}
+      <label for="id_day">اليوم</label>
+      {{ form.day }}
+      <label for="id_timeslot">الأوقات </label>
+      {{ form.timeslot }}
+    </div>
 
     <!-- <div>
         <input autofocus type="text" name="carmaker" placeholder="car maker">

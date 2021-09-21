@@ -26,3 +26,14 @@ section form input {
   display: block;
   margin: 0 auto;
 }
+
+input{ 
+  text-align: right; 
+}
+
+label {
+  display: block;
+  text-align: right;
+}
+
+

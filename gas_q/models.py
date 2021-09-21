@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import RegexValidator, MaxLengthValidator, MinLengthValidator
+from django.core.validators import RegexValidator
 
 
 class User(AbstractUser):
@@ -8,13 +8,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
-# class CarMake(models.Model):
-#     name = models.CharField(max_length=64)
-#     slug = models.SlugField()
-
-#     def __str__(self):
-#         return self.name
      
 
 class Appointment(models.Model):
@@ -24,20 +17,20 @@ class Appointment(models.Model):
 
     TIMESLOT_LIST = (
         (None, 'الأوقات'),
-        (00, '08:30 – 09:00'),
-        (10, '09:00 – 09:30'),
-        (11, '09:30 – 10:00'),
-        (12, '10:00 – 10:30'),
-        (13, '10:30 – 11:00'),
-        (14, '11:00 – 11:30'),
-        (15, '11:30 – 12:00'),
-        (16, '12:00 – 12:30'),
-        (17, '12:30 – 01:00'),
-        (18, '01:00 – 01:30'),
-        (19, '01:30 – 02:00'),
-        (20, '02:00 – 02:30'),
-        (21, '02:30 – 03:00'),
-        (22, '03:00 – 03:30'),
+        (10, '08:30 – 09:00'),
+        (11, '09:00 – 09:30'),
+        (12, '09:30 – 10:00'),
+        (13, '10:00 – 10:30'),
+        (14, '10:30 – 11:00'),
+        (15, '11:00 – 11:30'),
+        (16, '11:30 – 12:00'),
+        (17, '12:00 – 12:30'),
+        (18, '12:30 – 01:00'),
+        (19, '01:00 – 01:30'),
+        (20, '01:30 – 02:00'),
+        (21, '02:00 – 02:30'),
+        (22, '02:30 – 03:00'),
+        (23, '03:00 – 03:30'),
     )
 
     DAYS = (
@@ -58,11 +51,11 @@ class Appointment(models.Model):
     # )
     car_make = models.CharField(max_length=24, blank=False)
     phone_number = models.CharField(
-                max_length=8,
+                max_length=9,
                 blank=True,
                 validators=[RegexValidator(
-                    regex='^[0-9]{8}', 
-                    message='8 nums', 
+                    regex='^[0-9]{2}-[0-9]{6}', 
+                    message='must be 8 numbers for example: 03-xxxxxx', 
                     code='nomatch')]
     )
     place = models.CharField(max_length=24, blank=False, null=True)
