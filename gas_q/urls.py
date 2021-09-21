@@ -7,5 +7,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("json", views.json, name="json"),
+    path("export_data", views.export_data, name="export_data"),
+    path("excel", views.excel, name="excel"),
 ]
 

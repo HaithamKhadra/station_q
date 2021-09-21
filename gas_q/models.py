@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxLengthValidator, MinLengthValidator
 
 
 class User(AbstractUser):
@@ -9,12 +9,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-class CarMake(models.Model):
-    name = models.CharField(max_length=64)
-    slug = models.SlugField()
+# class CarMake(models.Model):
+#     name = models.CharField(max_length=64)
+#     slug = models.SlugField()
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
      
 
 class Appointment(models.Model):
@@ -24,13 +24,24 @@ class Appointment(models.Model):
 
     TIMESLOT_LIST = (
         (None, 'اخشسبيشسبشيبش'),
-        (0, '09:00 – 09:30'),
-        (1, '10:00 – 10:30'),
-        (2, '11:00 – 11:30'),
-        (3, '12:00 – 12:30'),
-        (4, '13:00 – 13:30'),
-        (5, '14:00 – 14:30'),
+        (0, '08:30 – 09:00'),
+        (1, '09:00 – 09:30'),
+        (2, '09:30 – 10:00'),
+        (3, '10:00 – 10:30'),
+        (4, '10:30 – 11:00'),
+        (5, '11:00 – 11:30'),
+        (6, '11:30 – 12:00'),
+        (7, '12:00 – 12:30'),
+        (8, '12:30 – 01:00'),
     )
+
+    DAYS = (
+        (None, 'الأيام'),
+        (0, 'اثنين'),
+        (1, 'الثلاثاء'),
+        (2, 'الالرتسي'),
+    )
+
 
     user = models.OneToOneField(
                 User, 
@@ -39,15 +50,15 @@ class Appointment(models.Model):
                 null=True, 
                 related_name='user'
     )
-
-    car_make = models.ForeignKey(
-                CarMake, 
-                on_delete=models.CASCADE,
-                default=0, 
-                null=True,
-                related_name='car_make'
+    car_make = models.CharField(max_length=24, blank=False)
+    phone_number = models.CharField(
+                max_length=8,
+                blank=True,
+                validators=[RegexValidator(
+                    regex='^[0-9]{8}', 
+                    message='8 nums', 
+                    code='nomatch')]
     )
-
     car_num = models.CharField(
                 max_length=7,
                 validators=[RegexValidator(
@@ -55,7 +66,8 @@ class Appointment(models.Model):
                     message='Length has to be 1 letter, and 1 to 6 nums', 
                     code='nomatch')]
     )
-    timeslot = models.IntegerField(choices=TIMESLOT_LIST, default=0)
+    day = models.IntegerField(choices=DAYS,default=None)
+    timeslot = models.IntegerField(choices=TIMESLOT_LIST, default=None)
 
 
     def __str__(self):
@@ -65,36 +77,9 @@ class Appointment(models.Model):
         return {
             "id": self.id,
             "user": self.user.username,
-            "car_make": self.car_make.name,
+            "car_make": self.car_make,
             "car_num": self.car_num,
-            "timeslot": self.timeslot
+            "phone_number": self.phone_number,
+            "timeslot": self.timeslot, 
+            "day": self.day
         }
-
-
-# class TimeSlot(models.Model):
-
-#     class Meta:
-#         unique_together = ('user', 'date', 'timeslot')
-
-#     TIMESLOT_LIST = (
-#         (0, '09:00 – 09:30'),
-#         (1, '10:00 – 10:30'),
-#         (2, '11:00 – 11:30'),
-#         (3, '12:00 – 12:30'),
-#         (4, '13:00 – 13:30'),
-#         (5, '14:00 – 14:30'),
-#     )
-
-#     user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='user_time_slot')
-#     timeslot = models.IntegerField(choices=TIMESLOT_LIST)
-
-#     # date = models.DateField(help_text="YYYY-MM-DD")
-#     # timeslot = models.ManyToManyField(Appointment, related_name='time')
-
-#     def __str__(self):
-#         return self.user.username + '-' + self.timeslot.timeslot
-
-#     # @property
-#     # def time(self):
-#     #     return self.TIMESLOT_LIST[self.timeslot][1]
-
