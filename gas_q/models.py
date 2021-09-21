@@ -23,7 +23,7 @@ class Appointment(models.Model):
         unique_together = ('user', 'timeslot')
 
     TIMESLOT_LIST = (
-        (None, 'اخشسبيشسبشيبش'),
+        (None, 'الســاعه'),
         (0, '08:30 – 09:00'),
         (1, '09:00 – 09:30'),
         (2, '09:30 – 10:00'),
@@ -37,9 +37,9 @@ class Appointment(models.Model):
 
     DAYS = (
         (None, 'الأيام'),
-        (0, 'اثنين'),
+        (0, 'الأثنين'),
         (1, 'الثلاثاء'),
-        (2, 'الالرتسي'),
+        (2, 'الأربعاء'),
     )
 
 

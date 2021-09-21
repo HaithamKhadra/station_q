@@ -3,36 +3,34 @@
 {% block title %}login{% endblock %}
 
 {% block body %}
-<section id="login-register">
-    <div id="boxx">
+<section class="container d-flex flex-column justify-items-center align-items-center w-75 mt-5">
+    <!-- <div class="justify-content-center align-items-center"> -->
+    <h2 class="d-flex justify-content-center py-3">Log In</h2>
 
-        <div class="login-container">
-            <div class="title">
-                <h2>Log In</h2>
-            </div>
-            
-            {% if message %}
-                    <div>{{ message }}</div>
-            {% endif %}
-    
-            <form class="login-form" action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input autofocus class="form-control" type="text" name="username" placeholder="Username">
-                </div>
-                <!-- <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="Password">
-                </div> -->
-                <input class="btn btn-primary" type="submit" value="LOG IN">
-            </form>
-        </div>
-    
-        <div class="reg-sec">
-            <h2 class="space-even">Hello, Friend!</h2>
-            <p class="space-even">Don't have an account?</p>
-            <a class="space-even" href="{% url 'register' %}"><button class="btn btn-primary">Register here</button></a>
-        </div>
+    {% if message %}
+    <div class="d-flex justify-content-center">{{ message }}</div>
+    {% endif %}
 
+    <form class="d-flex flex-column justify-content-center w-75 py-4" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <!-- <div class="form-group">
+                  <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+              </div> -->
+      <div class="mb-3">
+        <label for="InputUsername" class="form-label">Username:</label>
+        <input type="text" class="form-control" id=InputUsername" name="username" placeholder="Username"
+          aria-describedby="username">
+      </div>
+      <!-- <div class="form-group">
+                  <input class="form-control" type="password" name="password" placeholder="Password">
+              </div> -->
+      <input class="btn btn-primary" type="submit" value="LOG IN">
+    </form>
+
+    <div class="d-flex flex-column justify-content-center py-3">
+      <p>Don't have an account?</p>
+      <a  href="{% url 'register' %}"><button class="btn btn-primary">Register here</button></a>
     </div>
+
 </section>
 {% endblock %}

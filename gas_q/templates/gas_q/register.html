@@ -3,23 +3,24 @@
 {% block title %}register{% endblock %}
 
 {% block body %}
-<div id="login-register">
-    <div id="boxx">
-        <div class="login-container">
-            <div class="title">
-                <h2>Register</h2>
-            </div>
+<section class="container d-flex flex-column justify-items-center align-items-center w-75 mt-5">
+  <h2 class="d-flex justify-content-center py-3">Register</h2>
 
-            {% if message %}
-                <div>{{ message }}</div>
-            {% endif %}
+  {% if message %}
+  <div class="d-flex justify-content-center">{{ message }}</div>
+  {% endif %}
 
-            <form class="login-form" action="{% url 'register' %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
+  <form class="d-flex flex-column justify-content-center w-75 py-4" action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <!-- <div class="form-group">
                     <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-                </div>
-                <!-- <div class="form-group">
+                </div> -->
+    <div class="mb-3">
+      <label for="InputUsername" class="form-label">Username:</label>
+      <input type="text" class="form-control" id=InputUsername" name="username" placeholder="Username"
+        aria-describedby="username">
+    </div>
+    <!-- <div class="form-group">
                     <input class="form-control" type="email" name="email" placeholder="Email Address">
                 </div>
                 <div class="form-group">
@@ -28,14 +29,13 @@
                 <div class="form-group">
                     <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
                 </div> -->
-                <input class="btn btn-primary" type="submit" value="REGISTER">
-            </form>
-        </div>
+    <input class="btn btn-primary" type="submit" value="REGISTER">
+  </form>
+  </div>
 
-        <div class="reg-sec">
-            <p style="font-size: 20px;">Already have an account?</p>
-            <a href="{% url 'login' %}"><button class="btn btn-primary">Log In</button></a>
-        </div>
-    </div>
-</div>
+  <div class="d-flex flex-column justify-content-center py-3">
+    <p style="font-size: 20px;">Already have an account?</p>
+    <a href="{% url 'login' %}"><button class="btn btn-primary">Log In</button></a>
+  </div>
+</section>
 {% endblock %}

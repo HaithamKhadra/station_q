@@ -77,16 +77,14 @@ def index(request):
             time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() > 7
             # timeslot_taken = Appointment.objects.filter(timeslot=timeslot).count() > 2
 
-            print(time_taken)
+            # print(time_taken)
             if car_num_exists or user_has_app or time_taken:
-                return render(request, 'gas_q/index.html', {
-                    'form': form,
-                    'msg': 'failed'
-                })
+                return render(request, 'gas_q/error.html')
             else:
                 new_appointment.user = request.user
                 new_appointment.save()
-                return redirect('index')
+                # return redirect('index')
+                return render(request, 'gas_q/done.html')
 
     return render(request, 'gas_q/index.html', {
         'form': form

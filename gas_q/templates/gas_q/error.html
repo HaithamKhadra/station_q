@@ -1,0 +1,23 @@
+{% extends "gas_q/layout.html" %}
+{% load static %}
+
+{% block title %}Gas Queue {% endblock %}
+
+{% block body %}
+
+<ul>
+  <h2>Scheduling Appointment failed:</h2>
+  <li>user already have an appointment</li>
+  <li>car number already scheduled for an appointment</li>
+  <li>time chosen is full, choose another time</li>
+</ul>
+
+
+<h1> 
+  <a href="{% url 'index' %}">Return to Main Page</a>
+</h1>
+
+
+
+
+{% endblock %}
