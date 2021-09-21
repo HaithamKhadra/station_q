@@ -58,7 +58,7 @@ def register(request):
         return render(request, "gas_q/register.html")
 
 
-@login_required(login_url='/login')
+# @login_required(login_url='/login')
 def index(request):
 
     form = CreateForm()
@@ -72,16 +72,17 @@ def index(request):
             car_num = request.POST['car_num']
             day = request.POST['day']
             timeslot = request.POST['timeslot']
+            user = request.POST['user']
             car_num_exists = Appointment.objects.filter(car_num=car_num).exists()
-            user_has_app = Appointment.objects.filter(user=request.user).exists()
-            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() > 7
+            user_has_app = Appointment.objects.filter(user=user).exists()
+            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 2
             # timeslot_taken = Appointment.objects.filter(timeslot=timeslot).count() > 2
 
             # print(time_taken)
             if car_num_exists or user_has_app or time_taken:
                 return render(request, 'gas_q/error.html')
             else:
-                new_appointment.user = request.user
+                new_appointment.user = user
                 new_appointment.save()
                 # return redirect('index')
                 return render(request, 'gas_q/done.html')
@@ -94,7 +95,7 @@ def index(request):
     #     'test': 'hello, world!'
     # })
 
-@login_required(login_url='/login')
+# @login_required(login_url='/login')
 def json(request):
     if request.method == 'GET':
         try:
@@ -129,7 +130,7 @@ def json(request):
 #     return response
 
 
-@login_required(login_url='/login')
+# @login_required(login_url='/login')
 def export_data(request):
     
     response = HttpResponse(content_type='application/ms-excel')
@@ -164,7 +165,7 @@ def export_data(request):
 
         for col_num in range(5):
             if col_num == 0:
-                ws.write(row_num, col_num, str(appointment.user.username), font_style)
+                ws.write(row_num, col_num, str(appointment.user), font_style)
             elif col_num == 1:
                 ws.write(row_num, col_num, str(appointment.car_make), font_style)
             elif col_num == 2:

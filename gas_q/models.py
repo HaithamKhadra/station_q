@@ -43,13 +43,14 @@ class Appointment(models.Model):
     )
 
 
-    user = models.OneToOneField(
-                User, 
-                on_delete=models.CASCADE, 
-                default=None, 
-                null=True, 
-                related_name='user'
-    )
+    user = models.CharField(max_length=64, blank=False)
+    # user = models.OneToOneField(
+    #             User, 
+    #             on_delete=models.CASCADE, 
+    #             default=None, 
+    #             null=True, 
+    #             related_name='user'
+    # )
     car_make = models.CharField(max_length=24, blank=False)
     phone_number = models.CharField(
                 max_length=8,
@@ -71,15 +72,15 @@ class Appointment(models.Model):
 
 
     def __str__(self):
-        return self.user.username 
+        return self.user
 
     def serialize(self):
         return {
             "id": self.id,
-            "user": self.user.username,
+            "user": self.user,
             "car_make": self.car_make,
             "car_num": self.car_num,
             "phone_number": self.phone_number,
+            "day": self.day,
             "timeslot": self.timeslot, 
-            "day": self.day
         }

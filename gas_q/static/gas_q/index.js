@@ -7,15 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
 const removeTimeSlot = () => {
   const hours = document.getElementById('id_timeslot');
   const days = document.getElementById('id_day');
+  const labels = document.getElementsByTagName('label');
   // console.log(days.selectedOptions.value)
+  // let label;
+  for(var i = 0; i < labels.length; i++ ) {
+    if (labels[i].htmlFor === 'id_timeslot')
+      var label = labels[i]
+  }
+  // labels.forEach(la => {
+  //   if (la.htmlFor === 'id_timeslot') {
+  //     label = la
+  //     console.log(label)
+  //   }
+  // })
   
   hours.style.display = 'none';
+  label.style.display = 'none';
   
   days.addEventListener('change', () => {
     
     if (days.value === '') {
+      label.style.display = 'none';
       hours.style.display = 'none';
     } else  {
+        label.style.display = 'block';
         hours.style.display = 'block';
       }
   });
@@ -54,7 +69,7 @@ const removeTimeSlot = () => {
 
     // console.log(map);
     // let hide = map[0]
-    let hide = Object.keys(counts).filter(key => counts[key] >= 3) 
+    let hide = Object.keys(counts).filter(key => counts[key] >= 2) 
     console.log(hide);
     
     day_options[0].addEventListener('change', () => {

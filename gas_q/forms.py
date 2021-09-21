@@ -12,18 +12,22 @@ class CreateForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['phone_number', 'car_make', 'car_num', 'day', 'timeslot']
+        fields = ['user', 'phone_number', 'car_make', 'car_num', 'day', 'timeslot']
         widgets = {
+            'user': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'الأسم'
+            }),
             'car_make': TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'اسم السياره'
             }),
             'day': Select(attrs={
-                'style': 'max-width: 400px;',
+                # 'style': 'max-width: 400px;',
                 'class':'day_options form-select',
             }),
             'timeslot': Select(attrs={
-                'style': 'max-width: 400px;',
+                # 'style': 'max-width: 400px;',
                 'class':'hour_options form-select',
             }),
             'car_num': TextInput(attrs={
