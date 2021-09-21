@@ -17,7 +17,7 @@ class CreateForm(forms.ModelForm):
         widgets = {
             'user': TextInput(attrs={
                 'class': 'form-control py-1 mb-3',
-                'placeholder': 'الأسم'
+                'placeholder': 'الأسم الثلاثي'
             }),
             'place': TextInput(attrs={
                 'class': 'form-control py-1 mb-3',
@@ -35,7 +35,7 @@ class CreateForm(forms.ModelForm):
             }),
             'car_num': TextInput(attrs={
                 'class': 'form-control py-1 mb-2',
-                'placeholder': 'رقم السيارة'
+                'placeholder': ' الرقم باللغة الأجنبية  '
             }), 
             'phone_number': TextInput(attrs={
                 'class': 'form-control py-1 mb-3',
