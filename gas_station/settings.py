@@ -26,7 +26,7 @@ SECRET_KEY = get_random_secret_key()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['haitham21.pythonanywhere.com', 'JaffalGroup.pythonanywhere.com']
+ALLOWED_HOSTS = ['haitham21.pythonanywhere.com', 'jaffalgroup.pythonanywhere.com']
 
 
 # Application definition
