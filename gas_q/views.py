@@ -74,7 +74,7 @@ def index(request):
             place = request.POST['place']
             car_num_exists = Appointment.objects.filter(car_num=car_num).exists()
             user_has_app = Appointment.objects.filter(user=user).exists()
-            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 2 # CHANGE TO 6
+            time_taken = Appointment.objects.filter(day=day, timeslot=timeslot).count() >= 6 
 
             if car_num_exists or user_has_app or time_taken:
                 return render(request, 'gas_q/error.html')
